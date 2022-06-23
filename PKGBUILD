@@ -1,6 +1,6 @@
 pkgname=dwm-git
 _pkgname=dwm
-pkgver=6.3.r0.d39e2f34
+pkgver=r1702.9efc58c
 pkgrel=1
 pkgdesc="A dynamic window manager for X"
 url="http://dwm.suckless.org"
@@ -13,15 +13,13 @@ install=dwm.install
 provides=('dwm')
 conflicts=('dwm')
 source=(dwm.desktop
-        "$_pkgname::git+http://git.suckless.org/dwm"
-        config.h)
+        "$_pkgname::git+https://github.com/seeschloss/dwm")
 sha256sums=('bc36426772e1471d6dd8c8aed91f288e16949e3463a9933fee6390ee0ccd3f81'
-            'SKIP'
             'SKIP')
 
 pkgver(){
   cd $_pkgname
-  git describe --long --tags | sed -E 's/([^-]*-g)/r\1/;s/-/./g'
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 prepare() {
